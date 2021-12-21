@@ -18,6 +18,69 @@ services:
     networks:
       - homelab
 
+  grafana:
+    container_name: grafana
+    image: grafana/grafana:8.3.2
+    restart: unless-stopped
+    depends_on:
+      - traefik
+      - prometheus
+    environment:
+      - GF_LOG_MODE=console file
+    expose:
+      - 3000
+    volumes:
+      - /homelab/grafana:/var/lib/grafana
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.grafana.rule=Host(`grafana.erhbg.com`)
+      - traefik.http.routers.grafana.tls=true
+      - traefik.http.routers.grafana.entrypoints=websecure
+      - traefik.http.services.grafana.loadbalancer.server.port=3000
+    networks:
+      - homelab
+
+  prometheus:
+    container_name: prometheus
+    image: prom/prometheus:v2.31.1
+    restart: unless-stopped
+    depends_on:
+      - cadvisor
+      - node-exporter
+    expose:
+      - 9090
+    volumes:
+      - /homelab/config/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+    networks:
+      - homelab
+
+  node-exporter:
+    container_name: node_exporter
+    image: prom/node-exporter:v1.2.2
+    restart: unless-stopped
+    expose:
+      - 9100
+    networks:
+      - homelab
+
+  cadvisor:
+    container_name: cadvisor
+    image: gcr.io/cadvisor/cadvisor:v0.37.5
+    restart: unless-stopped
+    expose:
+      - 8080
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+      - /dev/disk/:/dev/disk:ro
+    privileged: true
+    networks:
+      - homelab
+
 networks:
   homelab:
     name: homelab
