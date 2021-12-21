@@ -1,0 +1,18 @@
+version: "3"
+
+services:
+  portainer_agent:
+    container_name: portainer_agent
+    image: portainer/agent:2.11.0
+    restart: always
+    ports:
+      - 9001:9001
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /var/lib/docker/volumes:/var/lib/docker/volumes
+    networks:
+      - homelab
+
+networks:
+  homelab:
+    name: homelab

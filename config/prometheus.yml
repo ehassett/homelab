@@ -10,6 +10,12 @@ scrape_configs:
         - node-exporter:9100
         - localhost:9090
 
+  - job_name: 'docker02.erhbg.com'
+    scrape_interval: 10s
+    static_configs:
+      - targets:
+        - docker02.erhbg.com:9100
+
   - job_name: 'opn.erhbg.com'
     scrape_interval: 10s
     static_configs:

@@ -1,0 +1,82 @@
+#!/bin/bash -e
+
+DOCKER_COMPOSE_VERSION="2.2.2"
+
+echo "--------------------------------"
+echo "Installing Apt Dependencies"
+echo "--------------------------------"
+sudo apt-get update && sudo apt-get upgrade -y
+
+sudo apt-get install -y \
+  apt-transport-https \
+  autoconf \
+  automake \
+  bison \
+  build-essential \
+  ca-certificates \
+  curl \
+  git \
+  gnupg gnupg-agent \
+  gpg \
+  keychain \
+  libc6-dev libssl-dev libtool libxml2-dev libyaml-dev \
+  lsb-release \
+  openssl \
+  silversearcher-ag \
+  software-properties-common \
+  tmux \
+  tree \
+  unzip \
+  vim \
+  zlib1g zlib1g-dev \
+  zsh
+
+echo "--------------------------------"
+echo "Installing Docker and Docker Compose"
+echo "--------------------------------"
+curl -fsSL https://get.docker.com | sh
+sudo curl -L "https://github.com/docker/compose/releases/download/v$DOCKER_COMPOSE_VERSION/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
+sudo usermod -a -G docker $USER
+
+echo "--------------------------------"
+echo "Installing Shell Accessories"
+echo "--------------------------------"
+echo "# oh-my-zsh"
+if [[ -d ~/.oh-my-zsh ]]; then
+  echo "WARN: Oh My Zsh directory exists at ~/.oh-my-zsh, skipping..."
+else
+  curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh | sh
+fi
+
+echo "--------------------------------"
+echo "Installing Vim Plugins"
+echo "--------------------------------"
+if [[ -d ~/.vim/autoload ]] || [[ -d ~/.vim/bundle ]]; then
+  echo "WARN: Autoload and Bundle directories already exist under ~/.vim, skipping..."
+else
+  mkdir -p ~/.vim/autoload ~/.vim/bundle
+  curl -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim
+  git clone https://github.com/lilydjwg/colorizer ~/.vim/bundle
+  git clone https://github.com/scrooloose/nerdtree.git ~/.vim/bundle/nerdtree
+  git clone https://tpope.io/vim/surround.git ~/.vim/bundle/surround
+fi
+
+echo "--------------------------------"
+echo "Copying Configuration Files and Setting Shell"
+echo "--------------------------------"
+wget -O ~/.tmux.conf https://raw.githubusercontent.com/ethanhassett/dotfiles/main/tmux/.tmux.conf
+wget -O ~/.vimrc https://raw.githubusercontent.com/ethanhassett/dotfiles/main/vim/.vimrc
+wget -O ~/.zshrc https://raw.githubusercontent.com/ethanhassett/dotfiles/main/zsh/.zshrc
+mkdir -p ~/.oh-my-zsh/themes && \
+  wget -O ~/.oh-my-zsh/themes/erhbg.zsh-theme https://raw.githubusercontent.com/ethanhassett/dotfiles/main/zsh/erhbg.zsh-theme
+mkdir -p ~/.dir_colors && \
+  wget -O ~/.dir_colors/dircolors.256darksolarized https://raw.githubusercontent.com/ethanhassett/dotfiles/main/zsh/dircolors.256darksolarized
+
+if [[ $SHELL != "/bin/zsh" ]]; then
+  chsh -s /bin/zsh
+fi
+
+echo "--------------------------------"
+echo "System has been bootstrapped successfully, Happy Hacking!"
+echo "--------------------------------"

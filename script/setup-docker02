@@ -1,0 +1,4 @@
+#!/bin/sh
+
+mkdir -p /homelab/portainer_agent
+wget -O /homelab/portainer_agent/docker-compose.yml https://raw.githubusercontent.com/ethanhassett/homelab/main/portainer/docker-compose.agent.yml
