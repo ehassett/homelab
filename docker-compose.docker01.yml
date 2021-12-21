@@ -29,6 +29,8 @@ services:
       - GF_LOG_MODE=console file
     expose:
       - 3000
+    volumes:
+      - grafana:/var/lib/grafana
     labels:
       - traefik.enable=true
       - traefik.http.routers.grafana.rule=Host(`grafana.erhbg.com`)
@@ -49,6 +51,7 @@ services:
       - 9090
     volumes:
       - /homelab/config/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus:/prometheus
     command:
       - --config.file=/etc/prometheus/prometheus.yml
     networks:
@@ -83,3 +86,9 @@ networks:
   homelab:
     name: homelab
     external: true
+
+volumes:
+  grafana:
+    name: grafana
+  prometheus:
+    name: prometheus
