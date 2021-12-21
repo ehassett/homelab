@@ -14,3 +14,10 @@ Open source router and firewall platform. Auxillary configuration stored at [./o
 ### docker01
 
 * [portainer](portainer): Container dashboard to manage and monitor docker machines. See [its README](portainer/README.md) for more info.
+
+* [traefik](https://traefik.io): Reverse proxy.
+
+# Usage
+
+To copy all files needed to launch docker01 services from Portainer, run [script/bootstrap-docker01](script/bootstrap-docker01).
+Next, login to the host and run `cd /homelab/portainer && docker-compose up -d` to deploy Portainer.

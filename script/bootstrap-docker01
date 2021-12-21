@@ -1,0 +1,5 @@
+#!/bin/sh
+
+mkdir -p /homelab/portainer/data /homelab/certificates /homelab/config
+wget -O /homelab/portainer/docker-compose.yml https://raw.githubusercontent.com/ethanhassett/homelab/main/portainer/docker-compose.yml
+wget -O /homelab/config/traefik.yml https://raw.githubusercontent.com/ethanhassett/homelab/main/config/traefik.yml
