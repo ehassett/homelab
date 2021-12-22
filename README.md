@@ -21,12 +21,16 @@ Open source router and firewall platform. Auxillary configuration stored at [./o
   * [prometheus](https://prometheus.io): Monitoring backend.
   * [node-exporter](https://github.com/prometheus/node_exporter): Hardware and OS metrics exporter.
   * [cadvisor](https://github.com/google/cadvisor): Container metrics aggregation.
+  * [loki](https://grafana.com/oss/loki/): Logging backend.
+  * [promtail](https://grafana.com/docs/loki/latest/clients/promtail/): Log exporter.
 
 ### docker02
 
 * [portainer_agent](portainer/docker-compose.agent.yml): Agent container to remotely manage Docker host. See the [portainer README](portainer/README.md) for more info.
 
-* [node-exporter](https://github.com/prometheus/node_exporter): Hardware and OS metrics exporter.
+* Grafana Stack:
+  * [node-exporter](https://github.com/prometheus/node_exporter): Hardware and OS metrics exporter.
+  * [promtail](https://grafana.com/docs/loki/latest/clients/promtail/): Log exporter.
 
 # Usage
 

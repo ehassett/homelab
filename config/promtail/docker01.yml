@@ -15,6 +15,7 @@ scrape_configs:
       - localhost
     labels:
       job: containerlogs
+      node: docker01.erhbg.com
       __path__: /var/lib/docker/containers/*/*log
 
   pipeline_stages:

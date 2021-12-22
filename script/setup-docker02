@@ -1,4 +1,5 @@
 #!/bin/sh
 
-mkdir -p /homelab/portainer_agent
+mkdir -p /homelab/portainer_agent /homelab/config
 wget -O /homelab/portainer_agent/docker-compose.yml https://raw.githubusercontent.com/ethanhassett/homelab/main/portainer/docker-compose.agent.yml
+wget -O /homelab/config/promtail.yml https://raw.githubusercontent.com/ethanhassett/homelab/main/config/promtail/docker02.yml

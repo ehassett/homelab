@@ -5,4 +5,4 @@ wget -O /homelab/portainer/docker-compose.yml https://raw.githubusercontent.com/
 wget -O /homelab/config/traefik.yml https://raw.githubusercontent.com/ethanhassett/homelab/main/config/traefik.yml
 wget -O /homelab/config/prometheus.yml https://raw.githubusercontent.com/ethanhassett/homelab/main/config/prometheus.yml
 wget -O /homelab/config/loki.yml https://raw.githubusercontent.com/ethanhassett/homelab/main/config/loki.yml
-wget -O /homelab/config/promtail.yml https://raw.githubusercontent.com/ethanhassett/homelab/main/config/promtail.yml
+wget -O /homelab/config/promtail.yml https://raw.githubusercontent.com/ethanhassett/homelab/main/config/promtail/docker01.yml

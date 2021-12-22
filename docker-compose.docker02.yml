@@ -1,5 +1,11 @@
 version: "3"
 
+x-logging:
+  &tag-json-logs
+  driver: "json-file"
+  options:
+    tag: "{{.ImageName}}|{{.Name}}|{{.ImageFullID}}|{{.FullID}}"
+
 services:
   node-exporter:
     container_name: node_exporter
@@ -9,6 +15,19 @@ services:
       - 9100:9100
     networks:
       - homelab
+    logging: *tag-json-logs
+
+  promtail:
+    container_name: promtail
+    image: grafana/promtail:2.4.1
+    restart: unless-stopped
+    volumes:
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+      - /homelab/config/promtail.yml:/etc/promtail/promtail-config.yaml
+    command: -config.file=/etc/promtail/promtail-config.yaml
+    networks:
+      - homelab
+    logging: *tag-json-logs
 
 networks:
   homelab:
