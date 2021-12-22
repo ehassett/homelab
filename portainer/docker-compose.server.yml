@@ -3,7 +3,7 @@ version: "3"
 services:
   portainer:
     container_name: portainer
-    image: portainer/portainer-ce:2.11.0
+    image: portainer/portainer-ee:2.10.0 # Change to portainer/portainer-ce if you do not have a license.
     restart: always
     ports:
       - 9000:9000
