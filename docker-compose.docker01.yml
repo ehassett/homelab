@@ -100,7 +100,7 @@ services:
       - 3100:3100
     volumes:
       - /homelab/config/loki.yml:/etc/loki/local-config.yaml
-      - loki:/data/loki
+      - loki:/loki
     command:
       - -config.file=/etc/loki/local-config.yaml
       - -ingester.wal-enabled=false
