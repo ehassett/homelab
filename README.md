@@ -13,7 +13,7 @@ Open source router and firewall platform. Auxillary configuration stored at [./o
 
 ### docker01
 
-* [portainer](https://portainer.io): Container dashboard to manage and monitor docker machines. See [its README](portainer/README.md) for more info.
+* [portainer](https://portainer.io): Container dashboard to manage and monitor docker machines.
 
 * [traefik](https://traefik.io): Reverse proxy.
 
@@ -26,7 +26,7 @@ Open source router and firewall platform. Auxillary configuration stored at [./o
 
 ### docker02
 
-* [portainer_agent](portainer/docker-compose.agent.yml): Agent container to remotely manage Docker host. See the [portainer README](portainer/README.md) for more info.
+* [portainer_agent](portainer/docker-compose.agent.yml): Agent container to remotely manage Docker host.
 
 * Grafana Stack:
   * [node-exporter](https://github.com/prometheus/node_exporter): Hardware and OS metrics exporter.
@@ -40,7 +40,17 @@ The [bootstrap script](script/bootstrap) will install general services and setup
 
 To copy all files needed to launch [docker01 services](dockerfile.docker01.yml) from Portainer, run [script/setup-docker01](script/setup-docker01).
 Next, login to the host and run `cd /homelab/portainer && docker-compose up -d` to deploy Portainer.
-Stacks can now be deployed remotely via the Portainer interface to docker01.
+Stacks can now be deployed remotely via the Portainer interface to docker01. Stacks need the following enviornment variables added in order to run properly:
+* grafana-server
+  * POSTGRES_USER
+  * POSTGRES_PASSWORD
+  * GRAFANA_SERVER_ROOT_URL
+  * GRAFANA_GITHUB_CLIENT_ID
+  * GRAFANA_GITHUB_CLIENT_SECRET
+  * GRAFANA_GITHUB_ALLOWED_ORGS
+  * GRAFANA_ADMIN_PASSWORD
+* traefik
+  * DOMAIN_DIRECTORY
 
 ## docker02
 

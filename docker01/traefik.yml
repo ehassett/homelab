@@ -1,0 +1,31 @@
+version: "3"
+
+x-logging:
+  &tag-json-logs
+  driver: "json-file"
+  options:
+    tag: "{{.ImageName}}|{{.Name}}|{{.ImageFullID}}|{{.FullID}}"
+
+services:
+  traefik:
+    container_name: traefik
+    image: traefik:2.5
+    restart: always
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /homelab/config/traefik.yml:/etc/traefik/traefik.yml
+      - "/homelab/certificates/${DOMAIN_DIRECTORY}/cert.pem:/etc/traefik/certs/\
+        default.cert" # Cert uploaded from OPNsense
+      - "/homelab/certificates/${DOMAIN_DIRECTORY}/key.pem:/etc/traefik/certs/d\
+        efault.key" # Key uploaded from OPNsense
+    networks:
+      - homelab
+    logging: *tag-json-logs
+
+networks:
+  homelab:
+    name: homelab
+    external: true
