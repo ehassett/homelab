@@ -1,4 +1,3 @@
-# (default configuration)
 auth_enabled: false
 
 server:
@@ -22,7 +21,7 @@ schema_config:
   configs:
     - from: 2020-10-24
       store: boltdb-shipper
-      object_store: filesystem
+      object_store: aws
       schema: v11
       index:
         prefix: index_
@@ -30,16 +29,14 @@ schema_config:
 
 storage_config:
   boltdb_shipper:
-    active_index_directory: /loki/boltdb-shipper-active
-    cache_location: /loki/boltdb-shipper-cache
-    cache_ttl: 24h         # Can be increased for faster performance over longer query periods, uses more disk space
-    shared_store: filesystem
-  filesystem:
-    directory: /loki/chunks
+    active_index_directory: /loki/active
+    cache_location: /loki/cache
+    cache_ttl: 24h # Can be increased for faster performance over longer query periods, uses more disk space
+    shared_store: aws
 
 compactor:
-  working_directory: /loki/boltdb-shipper-compactor
-  shared_store: filesystem
+  working_directory: /loki/compactor
+  shared_store: aws
   compaction_interval: 10m
   retention_enabled: true
   retention_delete_delay: 2h

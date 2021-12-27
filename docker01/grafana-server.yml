@@ -90,6 +90,11 @@ services:
       - loki:/loki
     command:
       - -config.file=/etc/loki/local-config.yaml
+      - -config.expand-env=true
+      - -storage_config.aws.s3.bucketnames=${LOKI_S3_BUCKET}
+      - -storage_config.aws.s3.region=${LOKI_S3_REGION}
+      - -storage_config.aws.s3.access-key-id=${LOKI_S3_ACCESS_KEY}
+      - -storage_config.aws.s3.secret-access-key=${LOKI_S3_SECRET_KEY}
       - -ingester.wal-enabled=false
     networks:
       - homelab
