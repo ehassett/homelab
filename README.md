@@ -13,7 +13,7 @@ Open source router and firewall platform. Auxillary configuration stored at [./o
 
 ### docker01
 
-* [portainer](https://portainer.io): Container dashboard to manage and monitor docker machines. See [its README](portainer/README.md) for more info.
+* [portainer](https://portainer.io): Container dashboard to manage and monitor docker machines.
 
 * [traefik](https://traefik.io): Reverse proxy.
 
@@ -26,7 +26,7 @@ Open source router and firewall platform. Auxillary configuration stored at [./o
 
 ### docker02
 
-* [portainer_agent](portainer/docker-compose.agent.yml): Agent container to remotely manage Docker host. See the [portainer README](portainer/README.md) for more info.
+* [portainer_agent](portainer/docker-compose.agent.yml): Agent container to remotely manage Docker host.
 
 * Grafana Stack:
   * [node-exporter](https://github.com/prometheus/node_exporter): Hardware and OS metrics exporter.
