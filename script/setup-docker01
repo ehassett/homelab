@@ -1,8 +1,13 @@
 #!/bin/sh
 
+# Setup /homelab directory structure
 mkdir -p /homelab/portainer/data /homelab/certificates /homelab/config
-wget -O /homelab/portainer/docker-compose.yml https://raw.githubusercontent.com/ethanhassett/homelab/main/portainer/docker-compose.server.yml
-wget -O /homelab/config/traefik.yml https://raw.githubusercontent.com/ethanhassett/homelab/main/config/traefik.yml
-wget -O /homelab/config/prometheus.yml https://raw.githubusercontent.com/ethanhassett/homelab/main/config/prometheus.yml
-wget -O /homelab/config/loki.yml https://raw.githubusercontent.com/ethanhassett/homelab/main/config/loki.yml
-wget -O /homelab/config/promtail.yml https://raw.githubusercontent.com/ethanhassett/homelab/main/config/promtail/docker01.yml
+
+# Copy Portainer server compose file
+wget -O /homelab/portainer/docker-compose.yml https://raw.githubusercontent.com/ethanhassett/homelab/main/docker01/portainer-server.yml
+
+# Copy config files
+wget -O /homelab/config/loki.yml https://raw.githubusercontent.com/ethanhassett/homelab/main/docker01/config/loki.yml
+wget -O /homelab/config/prometheus.yml https://raw.githubusercontent.com/ethanhassett/homelab/main/docker01/config/prometheus.yml
+wget -O /homelab/config/promtail.yml https://raw.githubusercontent.com/ethanhassett/homelab/main/docker01/config/promtail.yml
+wget -O /homelab/config/traefik.yml https://raw.githubusercontent.com/ethanhassett/homelab/main/docker01/config/traefik.yml

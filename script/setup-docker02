@@ -1,5 +1,10 @@
 #!/bin/sh
 
+# Setup /homelab directory structure
 mkdir -p /homelab/portainer_agent /homelab/config
-wget -O /homelab/portainer_agent/docker-compose.yml https://raw.githubusercontent.com/ethanhassett/homelab/main/portainer/docker-compose.agent.yml
-wget -O /homelab/config/promtail.yml https://raw.githubusercontent.com/ethanhassett/homelab/main/config/promtail/docker02.yml
+
+# Copy Portainer agent compose file
+wget -O /homelab/portainer_agent/docker-compose.yml https://raw.githubusercontent.com/ethanhassett/homelab/main/docker02/portainer-agent.yml
+
+# Copy config files
+wget -O /homelab/config/promtail.yml https://raw.githubusercontent.com/ethanhassett/homelab/main/docker02/config/promtail.yml

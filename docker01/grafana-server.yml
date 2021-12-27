@@ -1,0 +1,109 @@
+version: "3"
+
+x-logging:
+  &tag-json-logs
+  driver: "json-file"
+  options:
+    tag: "{{.ImageName}}|{{.Name}}|{{.ImageFullID}}|{{.FullID}}"
+
+services:
+  grafana:
+    container_name: grafana
+    image: grafana/grafana:8.3.3
+    restart: unless-stopped
+    depends_on:
+      - grafana-db
+    environment:
+      - GF_SERVER_ROOT_URL=${GRAFANA_SERVER_ROOT_URL}
+      - GF_DATABASE_TYPE=postgres
+      - GF_DATABASE_HOST=grafana-db:5432
+      - GF_DATABASE_NAME=grafana
+      - GF_DATABASE_USER=${POSTGRES_USER}
+      - GF_DATABASE_PASSWORD=${POSTGRES_PASSWORD}
+      - GF_DATABASE_SSL_MODE=disable
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_ADMIN_PASSWORD}
+      - GF_USERS_AUTO_ASSIGN_ORG_ROLE=Editor
+      - GF_USERS_EDITORS_CAN_ADMIN=true
+      - GF_AUTH_GITHUB_ENABLED=true
+      - GF_AUTH_GITHUB_ALLOW_SIGN_UP=true
+      - GF_AUTH_GITHUB_CLIENT_ID=${GRAFANA_GITHUB_CLIENT_ID}
+      - GF_AUTH_GITHUB_CLIENT_SECRET=${GRAFANA_GITHUB_CLIENT_SECRET}
+      - GF_AUTH_GITHUB_SCOPES=user:email,read:org
+      - GF_AUTH_GITHUB_AUTH_URL=https://github.com/login/oauth/authorize
+      - GF_AUTH_GITHUB_TOKEN_URL=https://github.com/login/oauth/access_token
+      - GF_AUTH_GITHUB_API_URL=https://api.github.com/user
+      - GF_AUTH_GITHUB_ALLOWED_ORGANIZATIONS=${GRAFANA_GITHUB_ALLOWED_ORGS}
+    expose:
+      - 3000
+    volumes:
+      - grafana:/var/lib/grafana
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.grafana.rule=Host(`grafana.erhbg.com`)
+      - traefik.http.routers.grafana.tls=true
+      - traefik.http.routers.grafana.entrypoints=websecure
+      - traefik.http.services.grafana.loadbalancer.server.port=3000
+    networks:
+      - homelab
+    logging: *tag-json-logs
+
+  grafana-db:
+    container_name: grafana_db
+    image: postgres:14.1
+    restart: unless-stopped
+    environment:
+      - POSTGRES_DB=grafana
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    expose:
+      - 5432
+    volumes:
+      - grafana-db:/var/lib/postgresql/data
+    networks:
+      - homelab
+    logging: *tag-json-logs
+
+  prometheus:
+    container_name: prometheus
+    image: prom/prometheus:v2.31.1
+    restart: unless-stopped
+    expose:
+      - 9090
+    volumes:
+      - /homelab/config/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus:/prometheus
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+    networks:
+      - homelab
+    logging: *tag-json-logs
+
+  loki:
+    container_name: loki
+    image: grafana/loki:2.4.1
+    restart: unless-stopped
+    ports:
+      - 3100:3100
+    volumes:
+      - /homelab/config/loki.yml:/etc/loki/local-config.yaml
+      - loki:/loki
+    command:
+      - -config.file=/etc/loki/local-config.yaml
+      - -ingester.wal-enabled=false
+    networks:
+      - homelab
+    logging: *tag-json-logs
+
+networks:
+  homelab:
+    name: homelab
+    external: true
+
+volumes:
+  grafana:
+    name: grafana
+  prometheus:
+    name: prometheus
+  loki:
+    name: loki
