@@ -103,6 +103,8 @@ networks:
 volumes:
   grafana:
     name: grafana
+  grafana-db:
+    name: grafana-db
   prometheus:
     name: prometheus
   loki:
