@@ -90,11 +90,8 @@ services:
       - loki:/loki
     command:
       - -config.file=/etc/loki/local-config.yaml
-      - -config.expand-env=true
-      - -log-config-reverse-order
-      - -s3.url=s3://${LOKI_S3_ACCESS_KEY}:${LOKI_S3_SECRET_KEY}@s3.${LOKI_S3_REGION}.amazonaws.com/${LOKI_S3_BUCKET}
-      - -s3.region=${LOKI_S3_REGION}
-      - -s3.force-path-style=true
+      - -s3.url=s3://${LOKI_S3_ACCESS_KEY}:${LOKI_S3_SECRET_KEY}@${LOKI_S3_REGION}
+      - -s3.buckets=${LOKI_S3_BUCKET}
       - -ingester.wal-enabled=false
     networks:
       - homelab
