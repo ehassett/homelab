@@ -91,6 +91,7 @@ services:
     command:
       - -config.file=/etc/loki/local-config.yaml
       - -config.expand-env=true
+      - -log-config-reverse-order
       - -s3.buckets=${LOKI_S3_BUCKET}
       - -s3.region=${LOKI_S3_REGION}
       - -s3.access-key-id=${LOKI_S3_ACCESS_KEY}
