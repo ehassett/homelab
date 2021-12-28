@@ -17,18 +17,22 @@ Open source router and firewall platform. Auxillary configuration stored at [./o
 
 * [traefik](https://traefik.io): Reverse proxy.
 
-* [grafana](https://grafana.com): Analytics and monitoring interface.
+* Grafana Server
+  * [grafana](https://grafana.com): Analytics and monitoring interface.
   * [prometheus](https://prometheus.io): Monitoring backend.
+  * [loki](https://grafana.com/oss/loki/): Logging backend.
+  * [postgres](https://postgresql.org): Grafana database.
+
+* Grafana Client
   * [node-exporter](https://github.com/prometheus/node_exporter): Hardware and OS metrics exporter.
   * [cadvisor](https://github.com/google/cadvisor): Container metrics aggregation.
-  * [loki](https://grafana.com/oss/loki/): Logging backend.
   * [promtail](https://grafana.com/docs/loki/latest/clients/promtail/): Log exporter.
 
 ### docker02
 
 * [portainer_agent](portainer/docker-compose.agent.yml): Agent container to remotely manage Docker host.
 
-* Grafana Stack:
+* Grafana Client:
   * [node-exporter](https://github.com/prometheus/node_exporter): Hardware and OS metrics exporter.
   * [promtail](https://grafana.com/docs/loki/latest/clients/promtail/): Log exporter.
 
@@ -49,6 +53,10 @@ Stacks can now be deployed remotely via the Portainer interface to docker01. Sta
   * GRAFANA_GITHUB_CLIENT_SECRET
   * GRAFANA_GITHUB_ALLOWED_ORGS
   * GRAFANA_ADMIN_PASSWORD
+  * LOKI_S3_ACCESS_KEY
+  * LOKI_S3_SECRET_KEY
+  * LOKI_S3_REGION
+  * LOKI_S3_BUCKET
 * traefik
   * DOMAIN_DIRECTORY
 
