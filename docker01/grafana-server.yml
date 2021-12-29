@@ -64,6 +64,23 @@ services:
       - homelab
     logging: *tag-json-logs
 
+  grafana-db-backup:
+    container_name: grafana_db_backup
+    image: ethanhassett/postgres-s3-backup:14
+    environment:
+      - POSTGRES_HOST=grafana_db
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DATABASE=grafana
+      - AWS_ACCESS_KEY_ID=${GRAFANA_BACKUP_AWS_KEY}
+      - AWS_SECRET_ACCESS_KEY=${GRAFANA_BACKUP_AWS_SECRET}
+      - AWS_REGION=${GRAFANA_BACKUP_AWS_REGION}
+      - AWS_S3_BUCKET=${GRAFANA_BACKUP_S3_BUCKET}
+      - BACKUP_SCHEDULE=15min
+    networks:
+      - homelab
+    logging: *tag-json-logs
+
   prometheus:
     container_name: prometheus
     image: prom/prometheus:v2.31.1
