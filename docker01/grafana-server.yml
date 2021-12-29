@@ -76,7 +76,7 @@ services:
       - AWS_SECRET_ACCESS_KEY=${GRAFANA_BACKUP_AWS_SECRET}
       - AWS_REGION=${GRAFANA_BACKUP_AWS_REGION}
       - AWS_S3_BUCKET=${GRAFANA_BACKUP_S3_BUCKET}
-      - BACKUP_SCHEDULE=15min
+      - BACKUP_SCHEDULE=weekly
     networks:
       - homelab
     logging: *tag-json-logs
