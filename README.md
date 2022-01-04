@@ -57,6 +57,10 @@ Stacks can now be deployed remotely via the Portainer interface to docker01. Sta
   * LOKI_S3_SECRET_KEY
   * LOKI_S3_REGION
   * LOKI_S3_BUCKET
+  * GRAFANA_BACKUP_AWS_KEY
+  * GRAFANA_BACKUP_AWS_SECRET
+  * GRAFANA_BACKUP_AWS_REGION
+  * GRAFANA_BACKUP_S3_BUCKET
 * traefik
   * DOMAIN_DIRECTORY
 
