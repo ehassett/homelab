@@ -22,11 +22,15 @@ Open source router and firewall platform. Auxillary configuration stored at [./o
   * [prometheus](https://prometheus.io): Monitoring backend.
   * [loki](https://grafana.com/oss/loki/): Logging backend.
   * [postgres](https://postgresql.org): Grafana database.
+  * [grafana-db-backup](https://hub.docker.com/repository/docker/ethanhassett/postgres-s3-backup): Grafana database backup to S3.
 
 * Grafana Client
   * [node-exporter](https://github.com/prometheus/node_exporter): Hardware and OS metrics exporter.
   * [cadvisor](https://github.com/google/cadvisor): Container metrics aggregation.
   * [promtail](https://grafana.com/docs/loki/latest/clients/promtail/): Log exporter.
+
+* Valheim Server
+  * [valheim](https://hub.docker.com/r/lloesche/valheim-server): Valheim game server.
 
 ### docker02
 
@@ -63,6 +67,9 @@ Stacks can now be deployed remotely via the Portainer interface to docker01. Sta
   * GRAFANA_BACKUP_S3_BUCKET
 * traefik
   * DOMAIN_DIRECTORY
+* valheim
+  * VALHEIM_WORLD_NAME
+  * VALHEIM_SERVER_PASSWORD
 
 ## docker02
 
